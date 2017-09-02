@@ -1,4 +1,4 @@
-package tarea1;
+package tarea1.cardgame;
 
 public interface Card {
 		

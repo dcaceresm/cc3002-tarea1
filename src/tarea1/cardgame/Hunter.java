@@ -1,6 +1,6 @@
-package tarea1;
+package tarea1.cardgame;
 
-public class Hunter extends AbstractCard implements Card{
+public class Hunter extends AbstractCard {
 
 	public Hunter(String n, int hp, int dt, int ap) {
 		super(n, hp, dt, ap);
@@ -9,7 +9,9 @@ public class Hunter extends AbstractCard implements Card{
 
 	@Override
 	public void attackCard(Card aCard) {
+		if(this.isAlive()) {
 		aCard.attackedByHunter(this);
+		}
 	}
 	
 	@Override

@@ -1,4 +1,4 @@
-package tarea1;
+package tarea1.cardgame;
 
 public abstract class AbstractCard implements Card{
 	private String Name;
@@ -28,7 +28,7 @@ public abstract class AbstractCard implements Card{
 	}
 	
 	public void doDamage(int damage) {
-		this.DamageTaken = Math.min(this.DamageTaken+damage, this.HitPoints);
+		this.DamageTaken = Math.max(0, Math.min(this.DamageTaken+damage, this.HitPoints));
 	}
 	public void boostAttack(int attackPoints) {
 		this.AttackPoints = Math.max(0, this.AttackPoints+attackPoints);
