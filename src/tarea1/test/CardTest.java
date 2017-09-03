@@ -210,7 +210,32 @@ public class CardTest {
 		mago.doDamage(dt);
 		shaman.doDamage(dt);
 		paladin.doDamage(dt);
-		brujo.doDamage(dt);	
+		brujo.doDamage(dt);
 	}
+	
+	@After public void cleanAttackBoosted() {
+		int defaultAP = 3;
+		int lowAP = -1000;
+		asesino.boostAttack(lowAP);
+		druida.boostAttack(lowAP);
+		healer.boostAttack(lowAP);
+		hunter.boostAttack(lowAP);
+		mago.boostAttack(lowAP);
+		knight.boostAttack(lowAP);
+		shaman.boostAttack(lowAP);
+		paladin.boostAttack(lowAP);
+		brujo.boostAttack(lowAP);
+		
+		asesino.boostAttack(defaultAP);
+		druida.boostAttack(defaultAP);
+		healer.boostAttack(defaultAP);
+		hunter.boostAttack(defaultAP);
+		mago.boostAttack(defaultAP);
+		knight.boostAttack(defaultAP);
+		shaman.boostAttack(defaultAP);
+		paladin.boostAttack(defaultAP);
+		brujo.boostAttack(defaultAP);
+	}
+		
 		
 }
