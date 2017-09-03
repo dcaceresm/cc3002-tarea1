@@ -15,6 +15,8 @@ public class CardTest {
 	private Shaman shaman;
 	private Warlock brujo;
 	
+	
+	
 	@Before public void setUp() {
 		asesino = new Assassin("asesino", 20,0,3);
 		druida = new Druid("druida",20,0,3);
@@ -76,6 +78,8 @@ public class CardTest {
 		assertEquals("Wrong AP", brujo.getAttackPoints(),3);
 	}
 	
+
+	
 	@Test public void testDoDamage() {
 		int dt = 21;
 		asesino.doDamage(dt);
@@ -96,10 +100,107 @@ public class CardTest {
 		assertEquals("Wrong Damage Taken", paladin.getDamageTaken(),20);
 		assertEquals("Wrong Damage Taken", shaman.getDamageTaken(),20);
 		assertEquals("Wrong Damage Taken", brujo.getDamageTaken(),20);
-	}
 
+	}
 	
-	@Test public void testAttack() {
+	
+	@Test public void testAssassinAttack() {
+		asesino.attackCard(brujo);
+		assertEquals("Wrong damage taken", brujo.getDamageTaken(),3);
+		asesino.attackCard(healer);
+		assertEquals("Wrong damage taken", healer.getDamageTaken(),6);
+		asesino.attackCard(mago);
+		assertEquals("Wrong damage taken", mago.getDamageTaken(),6);
+		asesino.attackCard(knight);
+		assertEquals("Wrong damage taken", knight.getDamageTaken(),1);
+	}
+	
+	@Test public void testWarlockAttack() {
+		
+		brujo.attackCard(asesino);
+		assertEquals("Wrong damage taken", asesino.getDamageTaken(),6);
+		brujo.attackCard(mago);
+		assertEquals("Wrong damage taken", mago.getDamageTaken(),1);
+		brujo.attackCard(knight);
+		assertEquals("Wrong damage taken", knight.getDamageTaken(),3);
+	}
+	
+	@Test public void testHealerAttack() {
+		mago.doDamage(3);
+		healer.attackCard(mago);
+		assertEquals("Wrong damake taken", mago.getDamageTaken(),0);
+		healer.attackCard(brujo);
+		assertEquals("Wrong damage taken", brujo.getDamageTaken(),3);
+	}
+	
+	@Test public void testHunterAttack() {
+		hunter.attackCard(shaman);
+		assertEquals("Wrong damage taken",shaman.getDamageTaken(),6);
+		hunter.attackCard(knight);
+		assertEquals("Wrong damage taken", knight.getDamageTaken(),6);
+		hunter.attackCard(mago);
+		assertEquals("Wrong damage taken", mago.getDamageTaken(),3);
+	}
+	
+	@Test public void testMageAttack() {
+		mago.attackCard(hunter);
+		mago.attackCard(paladin);
+		assertEquals("Wrong damage taken", hunter.getDamageTaken(),6);
+		assertEquals("Wrong damage taken", paladin.getDamageTaken(),6);
+		mago.attackCard(asesino);
+		assertEquals("Wrong damage taken", asesino.getDamageTaken(),3);
+	}
+	
+	@Test public void testKnightAttack() {
+		knight.attackCard(paladin);
+		knight.attackCard(mago);
+		assertEquals("Wrong damage taken", paladin.getDamageTaken(),1);
+		assertEquals("Wrong damage taken", mago.getDamageTaken(),3);
+	}
+	
+	@Test public void testDruidAttack() {
+		druida.attackCard(asesino);
+		assertEquals("Wrong attack boost", asesino.getAttackPoints(),4);
+		druida.attackCard(hunter);
+		assertEquals("Wrong damage taken", hunter.getDamageTaken(),3);
+		druida.attackCard(brujo);
+		assertEquals("Wrong attack boost", brujo.getAttackPoints(), 6);
+		assertEquals("Wrong damage taken", brujo.getDamageTaken(), 1);
+	}
+	
+	@Test public void testShamanAttack() {
+		shaman.attackCard(druida);
+		assertEquals("Wrong damage taken", druida.getDamageTaken(),2);
+		assertEquals("Wrong attack boost", druida.getAttackPoints(),1);
+		
+		shaman.attackCard(brujo);
+		assertEquals("Wrong damage taken", brujo.getDamageTaken(), 2);
+		assertEquals("Wrong attack boost", brujo.getAttackPoints(), 1);
+		
+		shaman.attackCard(hunter);
+		assertEquals("Wrong attack boost", hunter.getAttackPoints(), 2);
+		assertEquals("Wrong damage taken", hunter.getDamageTaken(), 1);
+	}
+	
+	@Test public void testPaladinAttack() {
+		healer.doDamage(3);
+		hunter.doDamage(3);
+		druida.doDamage(3);
+		
+		paladin.attackCard(healer);
+		assertEquals("Wrong attack boost", healer.getAttackPoints(),5);
+		assertEquals("Wrong damage taken", healer.getDamageTaken(), 1);
+		
+		paladin.attackCard(hunter);
+		assertEquals("Wrong attack boost", hunter.getAttackPoints(), 4);
+		assertEquals("Wrong damage taken", hunter.getDamageTaken(), 2);
+		
+		paladin.attackCard(druida);
+		assertEquals("Wrong attack boost", druida.getAttackPoints(), 5);
+		assertEquals("Wrong damage taken", druida.getDamageTaken(), 1);
+	}
+	
+	@After public void cleanDamageTaken() {
 		int dt = -21;
 		asesino.doDamage(dt);
 		druida.doDamage(dt);
@@ -109,66 +210,7 @@ public class CardTest {
 		mago.doDamage(dt);
 		shaman.doDamage(dt);
 		paladin.doDamage(dt);
-		brujo.doDamage(dt);
-		
-		asesino.attackCard(brujo);
-		assertEquals("Wrong damage taken", brujo.getDamageTaken(),3);
-		asesino.attackCard(healer);
-		assertEquals("Wrong damage taken", healer.getDamageTaken(),6);
-		asesino.attackCard(mago);
-		assertEquals("Wrong damage taken", mago.getDamageTaken(),6);
-		brujo.attackCard(asesino);
-		assertEquals("Wrong damage taken", asesino.getDamageTaken(),6);
-		brujo.attackCard(mago);
-		assertEquals("Wrong damage taken", mago.getDamageTaken(),7);
-		brujo.attackCard(knight);
-		assertEquals("Wrong damage taken", knight.getDamageTaken(),3);
-		healer.attackCard(mago);
-		assertEquals("Wrong damake taken", mago.getDamageTaken(),4);
-		healer.attackCard(brujo);
-		assertEquals("Wrong damage taken", brujo.getDamageTaken(),6);
-		shaman.attackCard(druida);
-		assertEquals("Wrong damage taken", druida.getDamageTaken(),2);
-		assertEquals("Wrong attack boost", druida.getAttackPoints(),1);
-		paladin.attackCard(druida);
-		assertEquals("Wrong damage taken", druida.getDamageTaken(),0);
-		assertEquals("Wrong attack boost", druida.getAttackPoints(),3);
-		hunter.attackCard(shaman);
-		assertEquals("Wrong damage taken",shaman.getDamageTaken(),6);
-		hunter.attackCard(knight);
-		assertEquals("Wrong damage taken", knight.getDamageTaken(),9);
-		hunter.attackCard(mago);
-		assertEquals("Wrong damage taken", mago.getDamageTaken(),7);
-		asesino.attackCard(knight);
-		assertEquals("Wrong damage taken", knight.getDamageTaken(),10);
-		mago.attackCard(paladin);
-		assertEquals("Wrong damage taken", paladin.getDamageTaken(), 6);
-		knight.attackCard(paladin);
-		assertEquals("Wrong damage taken", paladin.getDamageTaken(),7);
-		knight.attackCard(mago);
-		assertEquals("Wrong damage taken", mago.getDamageTaken(), 10);
-		druida.attackCard(asesino);
-		assertEquals("Wrong attack boost", asesino.getAttackPoints(),4);
-		druida.attackCard(hunter);
-		assertEquals("Wrong damage taken", hunter.getDamageTaken(),3);
-		mago.attackCard(hunter);
-		assertEquals("Wrong damage taken", hunter.getDamageTaken(),9);
-		shaman.attackCard(brujo);
-		assertEquals("Wrong damage taken", brujo.getDamageTaken(), 8);
-		assertEquals("Wrong attack boost", brujo.getAttackPoints(), 1);
-		paladin.attackCard(healer);
-		assertEquals("Wrong attack boost", healer.getAttackPoints(),5);
-		assertEquals("Wrong damage taken", healer.getDamageTaken(), 4);
-		paladin.attackCard(hunter);
-		assertEquals("Wrong attack boost", hunter.getAttackPoints(), 4);
-		assertEquals("Wrong damage taken", hunter.getDamageTaken(), 8);
-		shaman.attackCard(hunter);
-		assertEquals("Wrong attack boost", hunter.getAttackPoints(), 3);
-		assertEquals("Wrong damage taken", hunter.getDamageTaken(), 9);
-		mago.attackCard(brujo);
-		assertEquals("Wrong damage taken", brujo.getDamageTaken(), 11);
-		druida.attackCard(brujo);
-		assertEquals("Wrong attack boost", brujo.getAttackPoints(), 4);
-		assertEquals("Wrong damage taken", brujo.getDamageTaken(), 12);
+		brujo.doDamage(dt);	
 	}
+		
 }

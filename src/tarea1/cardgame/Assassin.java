@@ -5,7 +5,11 @@ public class Assassin extends AbstractCard {
 	public Assassin(String n, int hp, int dt, int ap) {
 		super(n, hp, dt, ap);
 	}
-
+	
+	/**
+	 * Make the assassin card attack another card, only if
+	 * it has HP greater than Damage Taken.
+	 */
 	@Override
 	public void attackCard(Card aCard) {
 		if(this.isAlive()) {

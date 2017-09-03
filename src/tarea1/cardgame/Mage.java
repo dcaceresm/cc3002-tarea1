@@ -6,7 +6,12 @@ public class Mage extends AbstractCard {
 		super(n, hp, dt, ap);
 		
 	}
-
+	
+	
+	/**
+	 * Make the mage card attack another card, only if
+	 * it has HP greater than Damage Taken.
+	 */
 	@Override
 	public void attackCard(Card aCard) {
 		if(this.isAlive()) {

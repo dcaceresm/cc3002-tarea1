@@ -6,7 +6,12 @@ public class Healer extends AbstractCard {
 		super(n, hp, dt, ap);
 		
 	}
-
+	
+	
+	/**
+	 * Make the healer card heal another card, only if
+	 * it has HP greater than Damage Taken.
+	 */
 	@Override
 	public void attackCard(Card aCard) {
 		if(this.isAlive()) {
